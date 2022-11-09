@@ -1,0 +1,15 @@
+<?php   
+    $db_host="localhost";
+    $db_user="root";
+    $db_password="";
+    $db_name="projet1_db";
+
+    try{
+        $db = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8",$db_user,$db_password);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOEXCEPTION $e)
+   {
+    $e->getMessage();
+   }
+?>
