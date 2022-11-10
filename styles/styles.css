@@ -6,18 +6,32 @@
   font-family: 'Montserrat', sans-serif;
 
 }
+
+body{
+    /* border: 1px solid ;  */
+    text-align : center;
+    background-color: rgb(167, 228, 228);
+  }
+
+header{
+    text-align : center; 
+    display: block;
+    background-color: #fffaf2;
+    /* position : fixed ; */
+    width : 100% ; 
+    /* z-index:10; */
+     margin-bottom: 5%;
+
+}
+
 .center{
     margin: auto;
     
 }
-body{
-    background-color: rgb(167, 228, 228);
-    }
 nav{
         text-align : center; 
         display: block;
-        background-color: #fffaf2bf;
-        position : fixed ;
+        /* position : fixed ; */
         width : 100% ; 
         z-index:10;
         padding-bottom: 2%;
@@ -40,9 +54,45 @@ h2{
     text-align : center;
 
 }
+.param{
+    margin-top: 5%;
+    padding-top: 2%;
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin: auto;
+    width: 50%;
+    background-color: white;
+
+}
+.table_info{
+    text-align: left;
+    padding-bottom: 2%;
+    border: 1px solid ;
+    width: 100%;
+}
+.champ{
+    display : solid;
+    width: 20%;
+    border: 1px solid ;
+    text-align: left;
+}
+.champ_a_remplir{
+
+    display: flex;
+    width: 40%;
+    border: 1px solid ;
+    text-align: right;
+
+}
+
+.bouton_deco{
+    text-align: right;
+    padding-bottom: 2% ;
+}
 
 footer{
-    margin-top: 25%;
+    margin-top: 12%;
     background-color: white;
     padding-bottom: 2%;
     text-align: right;

@@ -8,7 +8,7 @@ include('includes/_header.php');
 	<div class="container">
 			
 		<div >
-			<div class="center" >
+			<div class="param" >
 				<h2>
 				<?php
 				
@@ -16,10 +16,12 @@ include('includes/_header.php');
 				
 				session_start();
 
-				if(!isset($_SESSION['user_login'] ) || time() - $_SESSION['login_time'] > 30 )	//check unauthorize user not access in "welcome.php" page
+				if(!isset($_SESSION['user_login'] ) || time() - $_SESSION['login_time'] > 300 )	//check unauthorize user not access in "welcome.php" page
 				{
+                 
+					session_destroy();
+
 					header("location: index.php");
-                    session_destroy();
 				}
 				
 				$id = $_SESSION['user_login'];
@@ -32,13 +34,36 @@ include('includes/_header.php');
 				if(isset($_SESSION['user_login']))
 				{
 				?>
-					Welcome,
+					Bienvenue,
 				<?php
 						echo $row['username'];
 				}
 				?>
 				</h2>
-					<a href="deconnexion.php">Logout</a>
+				<!-- <div class='table_info'>
+					<div class='champ'>
+						<div>nom</div>
+						<div>prenom</div>
+						<div>date de naissance</div>
+						<div>email</div>
+						<div>mdp</div>
+						<div>phrase secret</div>
+					</div>
+					<div class='champ_a_remplir'>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+				</div> -->
+				<div class='bouton_deco'>
+					<a href="deconnexion.php">deconnexion</a>
+				</div>
+
+
+					
 			</div>
 			
 		</div>
