@@ -50,7 +50,7 @@ nav{
     padding-bottom: 4%;
 }
 h2{
-    padding-bottom: 5%;
+    padding-bottom: 2%;
     text-align : center;
 
 }
@@ -65,25 +65,15 @@ h2{
     background-color: white;
 
 }
-.table_info{
-    text-align: left;
-    padding-bottom: 2%;
-    border: 1px solid ;
-    width: 100%;
-}
-.champ{
-    display : solid;
-    width: 20%;
-    border: 1px solid ;
-    text-align: left;
-}
-.champ_a_remplir{
 
-    display: flex;
-    width: 40%;
-    border: 1px solid ;
-    text-align: right;
+.form_utilisateur{
+    text-align: left;
 
+}
+.info_utilisateur{
+    border: 1px solid #333;
+    padding: 2%;
+    margin: 1%;
 }
 
 .bouton_deco{

@@ -1,55 +1,78 @@
 <?php
-
+// je demande de ce connecter a la bdd avec le require
 require_once "connexion.php";
 
+// la condition est de voir si en cliquant sur le tout est que les champ Identifant, Mail, et Mot de passe sont remplis
 if(isset($_REQUEST['btn_register'])) //button name "btn_register"
 {
+	// on prend les trois valeur des champs html
 	$username	= strip_tags($_REQUEST['txt_username']);	//textbox name "txt_email"
 	$email		= strip_tags($_REQUEST['txt_email']);		//textbox name "txt_email"
 	$password	= strip_tags($_REQUEST['txt_password']);	//textbox name "txt_password"
 		
+	// condition si l'identifiant est remplis
 	if(empty($username)){
 		$errorMsg[]="Please enter username";	//check username textbox not empty 
 	}
+
+	// la condition si le mail est remplis
 	else if(empty($email)){
-		$errorMsg[]="Please enter email";	//check email textbox not empty 
+		$errorMsg[]="entrez votre email";	//check email textbox not empty 
 	}
+
+	// la condition qui permet de voir si la valeur que l'utilisateur a mis est bien un Email
 	else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-		$errorMsg[]="Please enter a valid email address";	//check proper email format 
+		$errorMsg[]="entrez un vrai email";	//check proper email format 
 	}
+	
+	//la condition qui permet de voir si le champ de mot de passe est vide 
 	else if(empty($password)){
-		$errorMsg[]="Please enter password";	//check passowrd textbox not empty
+		$errorMsg[]="entrez votre mot de passe";	//check passowrd textbox not empty
 	}
+
+	// condition que le mot de passe doit etre strictement supérieur a 6 caracteère 
 	else if(strlen($password) < 6){
-		$errorMsg[] = "Password must be atleast 6 characters";	//check passowrd must be 6 characters
+		$errorMsg[] = "Votre mot de passe doit etre supérieur a 6 caractere" ;	//check passowrd must be 6 characters
 	}
 	else
 	{	
 		try
-		{	
+		{
+			//la preparation de la requete SQL  
 			$select_stmt=$db->prepare("SELECT username, email FROM user 
 										WHERE username=:uname OR email=:uemail"); // sql select query
 			
+			//la protection de la requete et execution de la requete SQL 
 			$select_stmt->execute(array(':uname'=>$username, ':uemail'=>$email)); //execute query 
+			
+			// on prend le resiltat de la requete sql avec la methode fecth
 			$row=$select_stmt->fetch(PDO::FETCH_ASSOC);	
 			
+			// si il y a un resultat de l'Identifian est existant on lui envoye un message d'erreure 
 			if($row["username"]==$username){
-				$errorMsg[]="Sorry username already exists";	//check condition username already exists 
+				$errorMsg[]="Désolé mais votre Identifant est deja existant";	//check condition username already exists 
 			}
+
+			// si il y a un resultat de le mot de passe est existant
 			else if($row["email"]==$email){
-				$errorMsg[]="Sorry email already exists";	//check condition email already exists 
+				$errorMsg[]="Désolé mais votre Email est deja existant";	//check condition email already exists 
 			}
+
+			// condition si on a pas d'erreur
 			else if(!isset($errorMsg)) //check no "$errorMsg" show then continue
 			{
+				// on hash le mot de passe qui vien d'etre entrer
 				$new_password = password_hash($password, PASSWORD_DEFAULT); //encrypt password using password_hash()
 				
+				// on prepare la requet SQL pour ajouter l'utilisateur dans la base de données
 				$insert_stmt=$db->prepare("INSERT INTO user	(username,email,password) VALUES
 																(:uname,:uemail,:upassword)"); 		//sql insert query					
-				
+				// on execute la Requete sql 
 				if($insert_stmt->execute(array(	':uname'	=>$username, 
 												':uemail'	=>$email, 
 												':upassword'=>$new_password))){
-													
+					
+					// c'est pour montrer au que creation de la session a bien ete saisie par la base de données  
 					$registerMsg="Register Successfully..... Please Click On Login Account Link"; //execute query success message
 				}
 			}
