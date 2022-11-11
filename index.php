@@ -62,9 +62,9 @@ if(isset($_REQUEST['btn_login']))	//le nom du button est "btn_login"
 						// apres toutes le verification on attribue les information recuperer  de la base de donnée pour 
 						// La session 
 						$_SESSION["user_login"] = $row["ID"];	 //le nom de la session est : "user_login"
-                        $_SESSION['login_time'] = time();		//on note la date de la session
+                        			$_SESSION['login_time'] = time();		//on note la date de la session
 						$loginMsg = "Successfully Login...";   //on envoye un message que la connexion est un succes pour l'utilisateur
-						header("  refresh:2; bienvenue.php"); // refresh 2 second after redirect to "welcome.php" page
+						header("refresh:2; bienvenue.php"); // refresh 2 second after redirect to "welcome.php" page
 						// on peut meme mettre une animation en java script mais pour plus tard
 					
 					}
