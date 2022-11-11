@@ -1,105 +1,69 @@
 <?php
-// je demande de ce connecter a la bdd avec le require
+//azertyui
 require_once 'connexion.php';
 
-// je lance la session dans cette page
 session_start();
 
-// on verifie si l'utilisateur est deja connecter
-if(isset($_SESSION["user_login"]))	
+if(isset($_SESSION["user_login"]))	//check condition user login not direct back to index.php page
 {
 	header("location: bienvenue.php");
 }
 
-// la condition est de voir si en cliquant sur le tout est que les champ Identifant, Mail, et Mot de passe sont remplis
-if(isset($_REQUEST['btn_login']))	//le nom du button est <link href="styles/styles.css" rel="stylesheet">"btn_login" 
+if(isset($_REQUEST['btn_login']))	//button name is "btn_login" 
 {
-	$username	=strip_tags($_REQUEST["txt_username_email"]);	
-	$email		=strip_tags($_REQUEST["txt_username_email"]);	
-	$password	=strip_tags($_REQUEST["txt_password"]);			
-
+	$username	=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_username"
+	$email		=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
+	$password	=strip_tags($_REQUEST["txt_password"]);			//textbox name "txt_password"
 		
-	// la condition est de voir si le champs d'Identifant est t'il vide si oui message d'erreure
 	if(empty($username)){						
-		$errorMsg[]="Entrez votre Email ou Identifiant";
+		$errorMsg[]="please enter username or email";	//check "username/email" textbox not empty 
 	}
-
-	// la condition est de voir si le champs email est t'il vide si oui message d'erreure
 	else if(empty($email)){
-		$errorMsg[]="Entrez votre Email ou Identifiant";
+		$errorMsg[]="please enter username or email";	//check "username/email" textbox not empty 
 	}
-
-	// la condition est de voir si le champs mot de passe est t'il vide si oui message d'erreure
 	else if(empty($password)){
-		$errorMsg[]="Entrez votre mot de passe";	
+		$errorMsg[]="please enter password";	//check "passowrd" textbox not empty 
 	}
 	else
 	{
-
-		// apres les 3 condition  de verification des champs il y a la tentative a la connexion a la base de donné
 		try
 		{
-			//  on prepare la requete sql pour se connecter 
-			$select_stmt=$db->prepare("SELECT * FROM user WHERE username=:uname OR email=:uemail"); 
-
-			// je sais pas si cette ligne de code $select_stmt->execute permet toujours de proteger la base donné des
-			//  injection SQL mais si non il faut que je fasse un bindValue ou un bindParam
-
+			$select_stmt=$db->prepare("SELECT * FROM user WHERE username=:uname OR email=:uemail"); //sql select query
 			$select_stmt->execute(array(':uname'=>$username, ':uemail'=>$email));	//execute query with bind parameter
-			
-			// on recupere les informations avec un fetch assoc
 			$row=$select_stmt->fetch(PDO::FETCH_ASSOC);
 			
-			// la contion est que la requete sois suppérieur a 1 pout continuer 
-			if($select_stmt->rowCount() > 0)	
+			if($select_stmt->rowCount() > 0)	//check condition database record greater zero after continue
 			{
-				// la condition demande si l'utilisateur a mis on Identifiant ou sont Email et que les deux sont dans la base de données 
-				if($username==$row["username"] OR $email==$row["email"]) 
+				if($username==$row["username"] OR $email==$row["email"]) //check condition user taypable "username or email" are both match from database "username or email" after continue
 				{
-					// on verifie le mot de passe entre celui de la base de données et celui qui est sur la base de données en utilisant la fonction password verify 
-					if(password_verify($password, $row["password"])) 
+					if(password_verify($password, $row["password"])) //check condition user taypable "password" are match from database "password" using password_verify() after continue
 					{
-						// apres toutes le verification on attribue les information recuperer  de la base de donnée pour 
-						// La session 
-						$_SESSION["user_login"] = $row["ID"];	 //le nom de la session est : "user_login"
-                        $_SESSION['login_time'] = time();		//on note la date de la session
-						$loginMsg = "entrain de chargé(mettre ici animation js svp)...";   //on envoye un message que la connexion est un succes pour l'utilisateur
-						header("refresh:2; bienvenue.php"); // refresh 2 second after redirect to "welcome.php" page
-						// on peut meme mettre une animation en java script mais pour plus tard
-					
+						$_SESSION["user_login"] = $row["ID"];	//session name is "user_login"
+                        $_SESSION['login_time'] = time();
+						$loginMsg = "Successfully Login...";		//user login success message
+						header("refresh:2; bienvenue.php");			//refresh 2 second after redirect to "welcome.php" page
 					}
-
-					// ici c'est quand l'utilisateur a réussie a mettre sont Identifiant mais un mauvais mot de passe
 					else
 					{
-						$errorMsg[]="mauvais Identifant ou mauvais mot de passe";
+						$errorMsg[]="wrong password";
 					}
 				}
-
-				// ici c'est quand ma base de données n'a pas réussie a trouvée un identifiant
 				else
 				{
-					$errorMsg[]="mauvais Identifant ou mauvais mot de passe";
+					$errorMsg[]="wrong username or email";
 				}
 			}
-			
-			// ici c'est quand ma base de données n'a pas réussie a trouvée un identifiant
 			else
 			{
-				$errorMsg[]="mauvais Identifant ou mauvais mot de passe";
-				// j'ai mis les trois errorMsg avec le meme texte pour évité les tentative a la force brut
+				$errorMsg[]="wrong username or email";
 			}
 		}
-		// c'est en cas ou si on arrive pas a se connecter a la base de données
 		catch(PDOException $e)
 		{
 			$e->getMessage();
 		}		
 	}
 }
-
-
-// ce qui est visible par l'utilisateur
 include('includes/_header.php');
 ?>
 	<body>	
