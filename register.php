@@ -39,7 +39,7 @@ if(isset($_REQUEST['btn_register'])) //button name "btn_register"
 		try
 		{
 			//la preparation de la requete SQL  
-			$select_stmt=$db->prepare("SELECT username, email FROM user 
+			$select_stmt=$db->prepare("SELECT username, email FROM users 
 										WHERE username=:uname OR email=:uemail"); // sql select query
 			
 			//la protection de la requete et execution de la requete SQL 
@@ -49,12 +49,14 @@ if(isset($_REQUEST['btn_register'])) //button name "btn_register"
 			$row=$select_stmt->fetch(PDO::FETCH_ASSOC);	
 			
 			// si il y a un resultat de l'Identifian est existant on lui envoye un message d'erreure 
+			error_reporting(E_ERROR | E_PARSE);
 			if($row["username"]==$username){
 				$errorMsg[]="Désolé mais votre Identifant est deja existant";	//check condition username already exists 
 			}
 
 			// si il y a un resultat de le mot de passe est existant
-			else if($row["email"]==$email){
+			// error_reporting(E_ERROR | E_PARSE);
+			if($row["email"]==$email){
 				$errorMsg[]="Désolé mais votre Email est deja existant";	//check condition email already exists 
 			}
 
@@ -64,16 +66,19 @@ if(isset($_REQUEST['btn_register'])) //button name "btn_register"
 				// on hash le mot de passe qui vien d'etre entrer
 				$new_password = password_hash($password, PASSWORD_DEFAULT); //encrypt password using password_hash()
 				
+				// on definit de base que l'utilisateur est un utilisateur par defaut
+				$role = 'utilisateur' ;
 				// on prepare la requet SQL pour ajouter l'utilisateur dans la base de données
-				$insert_stmt=$db->prepare("INSERT INTO user	(username,email,password) VALUES
-																(:uname,:uemail,:upassword)"); 		//sql insert query					
+				$insert_stmt=$db->prepare("INSERT INTO users	(username,email,password,role) VALUES
+																(:uname,:uemail,:upassword,:role)"); 		//sql insert query					
 				// on execute la Requete sql 
 				if($insert_stmt->execute(array(	':uname'	=>$username, 
 												':uemail'	=>$email, 
-												':upassword'=>$new_password))){
-					
+												':upassword'=>$new_password,
+												':role' =>$role ))){
 					// c'est pour montrer au que creation de la session a bien ete saisie par la base de données  
 					$registerMsg="Register Successfully..... Please Click On Login Account Link"; //execute query success message
+					header("refresh:2; bienvenue.php");
 				}
 			}
 		}

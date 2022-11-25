@@ -1,7 +1,7 @@
 <nav>
             <a class="bouton" href='accueil.php'>Accueil</a>
   
-            <a class="bonton" href=''>Shoping</a>
+            <a class="bouton" href=''>Shoping</a>
 
             <a class="bouton" href=''>Contact </a>
 
@@ -14,11 +14,20 @@
                 {
                     echo"<a class='bouton' href='bienvenue.php'>profils</a>";
                 
-                }else{
+                    if($_SESSION["role"] == "admin")
+                    {
+                        echo '<a class="bouton" href="database.php"> admin</a> '; 
+                    }else{
+                        echo '';
+                    }
+                }
+                else
+                {
 
                     echo '<a class="bouton" href="index.php">connexion</a>';
                 }
 
+              
             ?>
 </nav>
     

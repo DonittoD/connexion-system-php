@@ -28,7 +28,7 @@ if(isset($_REQUEST['btn_login']))	//button name is "btn_login"
 	{
 		try
 		{
-			$select_stmt=$db->prepare("SELECT * FROM user WHERE username=:uname OR email=:uemail"); //sql select query
+			$select_stmt=$db->prepare("SELECT * FROM users WHERE username=:uname OR email=:uemail"); //sql select query
 			$select_stmt->execute(array(':uname'=>$username, ':uemail'=>$email));	//execute query with bind parameter
 			$row=$select_stmt->fetch(PDO::FETCH_ASSOC);
 			
@@ -38,10 +38,11 @@ if(isset($_REQUEST['btn_login']))	//button name is "btn_login"
 				{
 					if(password_verify($password, $row["password"])) //check condition user taypable "password" are match from database "password" using password_verify() after continue
 					{
-						$_SESSION["user_login"] = $row["ID"];	//session name is "user_login"
+						$_SESSION["user_login"] = $row["id"];	//session name is "user_login"
                         $_SESSION['login_time'] = time();
+						$_SESSION['role'] = $row['role'] ;
 						$loginMsg = "Successfully Login...";		//user login success message
-						header("refresh:2; bienvenue.php");			//refresh 2 second after redirect to "welcome.php" page
+						header("refresh:5; bienvenue.php");			//refresh 2 second after redirect to "welcome.php" page
 					}
 					else
 					{
