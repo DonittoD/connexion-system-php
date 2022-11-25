@@ -2,6 +2,15 @@
 session_start();
 require "connexion.php";
 
+if (!isset($_SESSION['user_login']) ||  $_SESSION['role'] != 'admin' || time() - $_SESSION['login_time'] > 120 )	//check unauthorize user not access in "welcome.php" page
+						{
+
+							session_destroy();
+
+							header("location: index.php");
+						}
+            
+
 if (isset($_GET["reset"])){
  if ($_GET["reset"])
  {
