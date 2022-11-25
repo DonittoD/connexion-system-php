@@ -133,7 +133,7 @@ include('includes/_header.php');
 				<div class="form-group">
 				<label class="col-sm-3 control-label">Email</label>
 				<div class="col-sm-6">
-				<input type="text" name="txt_email" class="form-control" placeholder="enter votre email" />
+				<input type="email" name="txt_email" class="form-control" placeholder="enter votre email" />
 				</div>
 				</div>
 					

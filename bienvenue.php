@@ -1,9 +1,6 @@
 <body>
-
-
 	<div class="wrapper">
 		<div class="container">
-
 			<div>
 						<?php
 
@@ -33,8 +30,8 @@
 						if (isset($_SESSION['user_login'])) {
 						?>
 							Bienvenue,
-						<?php
-							echo $row['username'];
+						<?=
+							$row['username'];
 						}
 						?>
 					</h2>
@@ -43,11 +40,11 @@
 					<div class='info_utilisateur'>
 						<div>
 							<label>Identifiant : </label>
-							<?php  echo $row['username'];?>
+							<?= $row['username'];?>
 						</div>
 						<div>
 							<label>Email :</label>
-							<?php  echo $row['email'];?>
+							<?= $row['email'];?>
 						</div>
 						<div>
 							<label>nom :</label> <?php  //echo $row['nom'];?> 
@@ -57,13 +54,29 @@
 						<div>
 							<label>prenom :</label> <?php // echo $row['prenom'];?> 
 							<input type="text" name="txt_username_email" class="form-control" placeholder="enter votre identifiant ou email" />
-				
 						</div>
 						<div>
 							<label>Reset Mot de passe</label>
-							<input type="text" name="txt_username_email" class="form-control" placeholder="enter votre identifiant ou email" />
-				
+							<input type="password" name="newpass" class="form-control" placeholder="enter votre identifiant ou email" />
 						</div>
+						<?php
+								if (isset($_POST['newpass']))
+								{
+									$password = $_POST['newpass'];
+									if(strlen($password) > 6){
+										$new_password = password_hash($password, PASSWORD_DEFAULT); //encrypt password using password_hash()
+										$insert_stmt=$db->prepare("UPDATE users SET password = :new_password WHERE id = :id"); //sql insert query
+										// on execute la Requete sql
+										$insert_stmt->execute(array('new_password' => $new_password, 'id' => $id));
+										 
+									
+
+										echo "<strong class='warn'>Modification réussite</strong>";
+									}else{
+										echo "<strong class='warn'>Mot de passe trop cours</strong>";
+									}
+								}
+							?>
 						<input type="submit" class='modif'  name="modif_mps"  value="modifier">
 					</div>	
 					</form>

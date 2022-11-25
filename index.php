@@ -97,16 +97,16 @@ include('includes/_header.php');
 			<div class ="page_de_connexion"><h2>Connexion</h2>
 			<form method="post" class="form-horizontal">
 					
-				<div class="form-group">
-				<label class="col-sm-3 control-label">Identifiant ou Email</label>
-				<div class="col-sm-6">
+				<div>
+				<label>Identifiant ou Email</label>
+				<div>
 				<input type="text" name="txt_username_email" class="form-control" placeholder="enter votre identifiant ou email" />
 				</div>
 				</div>
 					
-				<div class="form-group">
-				<label class="col-sm-3 control-label">Mot de passe</label>
-				<div class="col-sm-6">
+				<div>
+				<label>Mot de passe</label>
+				<div>
 				<input type="password" name="txt_password" class="form-control" placeholder="enter votre mot de passe" />
 				</div>
 				</div>
