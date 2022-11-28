@@ -1,20 +1,24 @@
 <?php
-//azertyui
+// 
 require_once 'connexion.php';
 
+// 
 session_start();
 
+// 
 if(isset($_SESSION["user_login"]))	//check condition user login not direct back to index.php page
 {
 	header("location: bienvenue.php");
 }
 
+// 
 if(isset($_REQUEST['btn_login']))	//button name is "btn_login" 
 {
 	$username	=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_username"
 	$email		=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
 	$password	=strip_tags($_REQUEST["txt_password"]);			//textbox name "txt_password"
 		
+	// 
 	if(empty($username) || (empty($password)) || (empty($email))){						
 		$errorMsg[]="un champs est vide";	//check si il y a un champs qui est vide
 	}
@@ -52,6 +56,7 @@ if(isset($_REQUEST['btn_login']))	//button name is "btn_login"
 		}		
 	}
 }
+//
 include('includes/_header.php');
 ?>
 	<body>	
@@ -92,7 +97,7 @@ include('includes/_header.php');
 			</div>
 					
 				<div >
-					<label class="col-sm-3 control-label">Mot de passe</label>
+					<label >Mot de passe</label>
 						<div>
 							<input type="password" name="txt_password" class="form-control" placeholder="enter votre mot de passe" />
 						</div>
