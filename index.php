@@ -15,15 +15,10 @@ if(isset($_REQUEST['btn_login']))	//button name is "btn_login"
 	$email		=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
 	$password	=strip_tags($_REQUEST["txt_password"]);			//textbox name "txt_password"
 		
-	if(empty($username)){						
-		$errorMsg[]="please enter username or email";	//check "username/email" textbox not empty 
+	if(empty($username) || (empty($password)) || (empty($email))){						
+		$errorMsg[]="un champs est vide";	//check si il y a un champs qui est vide
 	}
-	else if(empty($email)){
-		$errorMsg[]="please enter username or email";	//check "username/email" textbox not empty 
-	}
-	else if(empty($password)){
-		$errorMsg[]="please enter password";	//check "passowrd" textbox not empty 
-	}
+
 	else
 	{
 		try
@@ -43,22 +38,14 @@ if(isset($_REQUEST['btn_login']))	//button name is "btn_login"
 						$_SESSION['role'] = $row['role'] ;
 						$loginMsg = "Successfully Login...";		//user login success message
 						header("refresh:5; bienvenue.php");			//refresh 2 second after redirect to "welcome.php" page
-					}
-					else
-					{
-						$errorMsg[]="wrong password";
-					}
-				}
-				else
-				{
-					$errorMsg[]="wrong username or email";
-				}
-			}
-			else
-			{
-				$errorMsg[]="wrong username or email";
-			}
+					
+					}else{ $errorMsg[]="wrong password";}
+				
+				}else{$errorMsg[]="wrong username or email"; }
+			
+			} else{$errorMsg[]="wrong username or email";}
 		}
+
 		catch(PDOException $e)
 		{
 			$e->getMessage();
@@ -71,7 +58,7 @@ include('includes/_header.php');
 	<div>
 	
 	<div class="container">	
-		<div class="col-lg-12">
+		<div>
 		
 		<?php
 		if(isset($errorMsg))
@@ -95,34 +82,33 @@ include('includes/_header.php');
 		}
 		?>   
 			<div class ="page_de_connexion"><h2>Connexion</h2>
-			<form method="post" class="form-horizontal">
+				<form method="post">	
+					<div>
+						<label >Identifiant ou Email</label>
+					</div>	
+					<div>
+						<input type="text" name="txt_username_email" class="form-control" placeholder="enter votre identifiant ou email" />
+					</div>
+			</div>
 					
-				<div class="form-group">
-				<label class="col-sm-3 control-label">Identifiant ou Email</label>
-				<div class="col-sm-6">
-				<input type="text" name="txt_username_email" class="form-control" placeholder="enter votre identifiant ou email" />
-				</div>
-				</div>
-					
-				<div class="form-group">
-				<label class="col-sm-3 control-label">Mot de passe</label>
-				<div class="col-sm-6">
-				<input type="password" name="txt_password" class="form-control" placeholder="enter votre mot de passe" />
-				</div>
+				<div >
+					<label class="col-sm-3 control-label">Mot de passe</label>
+						<div>
+							<input type="password" name="txt_password" class="form-control" placeholder="enter votre mot de passe" />
+						</div>
 				</div>
 				
-				<div class="form-group">
-				<div class="col-sm-offset-3 col-sm-9 m-t-15">
-				<input type="submit" name="btn_login" class="" value="connexion">
-				</div>
+				<div>
+					<div >
+						<input type="submit" name="btn_login" class="" value="connexion">
+					</div>
 				</div>
 				
-				<div class="form-group">
-				<div class="col-sm-offset-3 col-sm-9 m-t-15">
-				Vous n'avez pas de compte ? <a href="register.php"><p class="text-info"> Cliqué ici our crée un compte</p></a>		
+				<div >
+					<div >
+						Vous n'avez pas de compte ? <a href="register.php"><p class="text-info"> Cliqué ici our crée un compte</p></a>		
+					</div>
 				</div>
-				</div>
-				</div>	
 			</form>
 			
 		</div>
