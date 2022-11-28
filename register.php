@@ -119,48 +119,46 @@ include('includes/_header.php');
 		}
 		?>   
 			<div class ='page_de_connexion'>
-			<h2>Inscription</h2>
-			<form method="post" class="form-horizontal">
+				<h2>Inscription</h2>
+					<form method="post" class="form-horizontal">
 					
 				
-				<div class="form-group">
-				<label class="col-sm-3 control-label">Identifiant</label>
-				<div class="col-sm-6">
-				<input type="text" name="txt_username" class="form-control" placeholder="enter votre Identifiant" />
-				</div>
-				</div>
-				
-				<div class="form-group">
-				<label class="col-sm-3 control-label">Email</label>
-				<div class="col-sm-6">
-				<input type="email" name="txt_email" class="form-control" placeholder="enter votre email" />
-				</div>
-				</div>
-					
-				<div class="form-group">
-				<label class="col-sm-3 control-label">Mot de passe</label>
-				<div class="col-sm-6">
-				<input type="password" name="txt_password" class="form-control" placeholder="enter votre mot de passe" />
-				</div>
-				</div>
-					
-				<div class="form-group">
-				<div class="col-sm-offset-3 col-sm-9 m-t-15">
-				<input type="submit"  name="btn_register" class="btn btn-primary " value="inscription">
-				</div>
+				<div>
+					<label >Identifiant</label>
+						<div>
+							<input type="text" name="txt_username" class="form-control" placeholder="enter votre Identifiant" />
+						</div>
 				</div>
 				
-				<div class="form-group">
-				<div class="col-sm-offset-3 col-sm-9 m-t-15">
-				Es ce que vous avez deja un compte ? <a href="index.php"><p class="text-info">Connexion</p></a>		
+				<div>
+					<label >Email</label>
+						<div>
+							<input type="text" name="txt_email" class="form-control" placeholder="enter votre email" />
+						</div>
 				</div>
+					
+				<div>
+					<label >Mot de passe</label>
+						<div >
+							<input type="password" name="txt_password" class="form-control" placeholder="enter votre mot de passe" />
+						</div>
 				</div>
+					
+				<div >
+						<div >
+							<input type="submit"  name="btn_register" class="btn btn-primary " value="inscription">
+						</div>
 				</div>
+				
+				<div >
+					<div>
+						Es ce que vous avez deja un compte ? <a href="index.php"><p class="text-info">Connexion</p></a>		
+					</div>
+				</div>
+			</div>
 					
 			</form>
-			
 		</div>
-
 		<?php 
 			include('includes/_footer.php');
 		?>
